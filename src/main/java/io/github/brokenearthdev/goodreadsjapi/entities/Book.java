@@ -18,6 +18,8 @@ package io.github.brokenearthdev.goodreadsjapi.entities;
 public interface Book {
 
     String getAuthor();
+    int getID();
+    String getISBN();
 
 
 }

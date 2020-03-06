@@ -17,8 +17,12 @@ package io.github.brokenearthdev.goodreadsjapi;
 
 import io.github.brokenearthdev.goodreadsjapi.authentication.GoodreadsAuthentication;
 import io.github.brokenearthdev.goodreadsjapi.authentication.GoodreadsOauth;
+import io.github.brokenearthdev.goodreadsjapi.entities.Author;
+import io.github.brokenearthdev.goodreadsjapi.request.RequestFactory;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class GoodreadsAPI {
 
@@ -31,9 +35,14 @@ public class GoodreadsAPI {
     private String secret;
     private GoodreadsOauth oauth;
 
-    public GoodreadsAPI(String key, String secret) {
+    public GoodreadsAPI(@NotNull String key, String secret) {
+        Objects.requireNonNull(key, "Key can't be null");
         this.key = key;
         this.secret = secret;
+    }
+
+    public GoodreadsAPI(String key) {
+        this(key, null);
     }
 
     public GoodreadsOauth getOAuth() throws IOException {
@@ -42,5 +51,12 @@ public class GoodreadsAPI {
         return oauth;
     }
 
+    public RequestFactory newRequestFactory() {
+        return new RequestFactory();
+    }
+
+    public Author getAuthor(int id) {
+        return null; // todo
+    }
 
 }

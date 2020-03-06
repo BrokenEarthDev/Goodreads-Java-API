@@ -27,6 +27,9 @@ import io.github.brokenearthdev.goodreadsjapi.authentication.GoodreadsOauth;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * A class responsible for sending requests to goodreads.com
+ */
 class Request implements GoodreadsRequest {
 
     private String baseURL;
