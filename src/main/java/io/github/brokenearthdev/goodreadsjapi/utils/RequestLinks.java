@@ -1,4 +1,4 @@
-package io.github.brokenearthdev.goodreadsjapi;
+package io.github.brokenearthdev.goodreadsjapi.utils;
 
 public enum RequestLinks {
 

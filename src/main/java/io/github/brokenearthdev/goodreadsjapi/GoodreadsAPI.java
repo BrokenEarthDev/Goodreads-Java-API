@@ -17,7 +17,8 @@ package io.github.brokenearthdev.goodreadsjapi;
 
 import io.github.brokenearthdev.goodreadsjapi.authentication.GoodreadsAuthentication;
 import io.github.brokenearthdev.goodreadsjapi.authentication.GoodreadsOauth;
-import io.github.brokenearthdev.goodreadsjapi.entities.Author;
+import io.github.brokenearthdev.goodreadsjapi.entities.book.Book;
+import io.github.brokenearthdev.goodreadsjapi.entities.user.Author;
 import io.github.brokenearthdev.goodreadsjapi.request.RequestFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,7 +57,15 @@ public class GoodreadsAPI {
     }
 
     public Author getAuthor(int id) {
-        return null; // todo
+        return null;
+    }
+
+    public Book getBookWithID(int internalID) {
+        return null;
+    }
+
+    public Book getBook(int isbn) {
+        return null;
     }
 
 }

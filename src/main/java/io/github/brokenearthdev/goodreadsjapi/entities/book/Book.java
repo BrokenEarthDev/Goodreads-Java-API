@@ -13,9 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package io.github.brokenearthdev.goodreadsjapi.entities;
+package io.github.brokenearthdev.goodreadsjapi.entities.book;
 
-public interface Book {
+import io.github.brokenearthdev.goodreadsjapi.entities.Entity;
+
+public interface Book extends Entity {
 
     String getAuthor();
     int getID();

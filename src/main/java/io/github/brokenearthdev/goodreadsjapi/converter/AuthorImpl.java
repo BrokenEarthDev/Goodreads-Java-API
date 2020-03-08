@@ -1,19 +1,17 @@
-package io.github.brokenearthdev.goodreadsjapi;
+package io.github.brokenearthdev.goodreadsjapi.converter;
 
-import com.google.api.client.http.HttpResponse;
-import io.github.brokenearthdev.goodreadsjapi.entities.Author;
-import io.github.brokenearthdev.goodreadsjapi.entities.Book;
+import io.github.brokenearthdev.goodreadsjapi.entities.user.Author;
+import io.github.brokenearthdev.goodreadsjapi.entities.book.Book;
 import io.github.brokenearthdev.goodreadsjapi.request.*;
-import org.apache.http.client.methods.RequestBuilder;
-import org.jsoup.nodes.Document;
 
 import java.util.List;
 
-class AuthorImpl implements Author {
+class AuthorImpl extends UserImpl implements Author {
 
     private int id;
 
-    AuthorImpl(int id, List<GoodreadsResponse> responses, List<Book> books) {
+    AuthorImpl(int userID, int id, List<GoodreadsResponse> responses, List<Book> books) {
+        super(userID);
         this.id = id;
         this.responses= responses;
         this.books = books;
@@ -68,4 +66,6 @@ class AuthorImpl implements Author {
         }
         return true;
     }
+
+
 }
