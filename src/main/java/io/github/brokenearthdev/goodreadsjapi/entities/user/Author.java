@@ -1,7 +1,7 @@
 package io.github.brokenearthdev.goodreadsjapi.entities.user;
 
 import io.github.brokenearthdev.goodreadsjapi.entities.book.Book;
-import io.github.brokenearthdev.goodreadsjapi.request.GoodreadsResponse;
+import io.github.brokenearthdev.goodreadsjapi.response.GoodreadsResponse;
 
 import java.util.List;
 

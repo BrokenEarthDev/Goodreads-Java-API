@@ -15,6 +15,8 @@ limitations under the License.
 */
 package io.github.brokenearthdev.goodreadsjapi.request;
 
+import io.github.brokenearthdev.goodreadsjapi.response.GoodreadsResponse;
+
 import java.io.IOException;
 
 /**

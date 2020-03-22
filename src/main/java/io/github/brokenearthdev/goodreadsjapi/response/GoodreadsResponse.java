@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package io.github.brokenearthdev.goodreadsjapi.request;
+package io.github.brokenearthdev.goodreadsjapi.response;
 
 import com.google.api.client.http.HttpResponse;
+import io.github.brokenearthdev.goodreadsjapi.request.GoodreadsRequest;
 import org.jsoup.nodes.Document;
 
 /**

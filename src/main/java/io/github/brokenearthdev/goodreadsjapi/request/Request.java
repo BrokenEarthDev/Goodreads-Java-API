@@ -15,17 +15,14 @@ limitations under the License.
 */
 package io.github.brokenearthdev.goodreadsjapi.request;
 
-import com.google.api.client.auth.oauth.OAuthGetAccessToken;
-import com.google.api.client.auth.oauth.OAuthHmacSigner;
 import com.google.api.client.auth.oauth.OAuthParameters;
 import com.google.api.client.http.*;
 import com.google.api.client.http.apache.ApacheHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import io.github.brokenearthdev.goodreadsjapi.GoodreadsAPI;
 import io.github.brokenearthdev.goodreadsjapi.authentication.GoodreadsOauth;
+import io.github.brokenearthdev.goodreadsjapi.response.BuiltResponse;
+import io.github.brokenearthdev.goodreadsjapi.response.GoodreadsResponse;
 
 import java.io.IOException;
-import java.net.URL;
 
 /**
  * A class responsible for sending requests to goodreads.com
