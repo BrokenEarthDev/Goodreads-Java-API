@@ -1,7 +1,7 @@
 package io.github.brokenearthdev.goodreadsjapi;
 
 import io.github.brokenearthdev.goodreadsjapi.entities.book.Book;
-import io.github.brokenearthdev.goodreadsjapi.response.GoodreadsResponse;
+import io.github.brokenearthdev.goodreadsjapi.response.*;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -14,16 +14,47 @@ public class GoodreadsBook implements Book {
     private int id;
     private String isbn;
     private List<GoodreadsResponse> responses;
+    private GoodreadsResponse response;
 
     private final Document document;
 
-    public GoodreadsBook(Document document) {
-        this.document = document;
+    public GoodreadsBook(GoodreadsResponse response) {
+        this.response = response;
+        this.document = response.getDocument();
     }
 
     @Override
     public String getAuthor() {
         if (author == null) {
+            ResponsePath path = new ResponsePathBuilder(response)
+                    .appendSubdirectory("book", 0)
+                    .appendSubdirectory("authors", 0)
+                    .appendSubdirectory("author", 0)
+                    .build();
+            ResponseSection section = path.getResponseSection();
+            this.author = section.getDocument().body().child(1).text();
+        }
+        return author;
+    }
+
+    @Override
+    public int getID() {
+        return 0;
+    }
+
+    @Override
+    public String getISBN() {
+        return null;
+    }
+
+    @Override
+    public List<GoodreadsResponse> getResponses() {
+        return null;
+    }
+}
+
+/*
+if (author == null) {
             Element main = document.getElementsByTag("GoodreadsResponse").get(0);
             if (main == null) return "{NULL}";
             Element bookElement = null;
@@ -64,21 +95,4 @@ public class GoodreadsBook implements Book {
             //if (authors.size() != 1)
             //author = authorBuilder.substring(0, authorBuilder.length()).append("}").toString(); //todo fix
         }
-        return author;
-    }
-
-    @Override
-    public int getID() {
-        return 0;
-    }
-
-    @Override
-    public String getISBN() {
-        return null;
-    }
-
-    @Override
-    public List<GoodreadsResponse> getResponses() {
-        return null;
-    }
-}
+ */

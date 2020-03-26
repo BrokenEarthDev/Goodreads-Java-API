@@ -20,6 +20,8 @@ import io.github.brokenearthdev.goodreadsjapi.request.GoodreadsRequest;
 import io.github.brokenearthdev.goodreadsjapi.response.GoodreadsResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.io.IOException;
 
@@ -68,7 +70,7 @@ public class BuiltResponse implements GoodreadsResponse {
      * @throws IOException If any parsing error occurred
      */
     public BuiltResponse(GoodreadsRequest request, HttpResponse response) throws IOException {
-        this(request, Jsoup.parse(response.parseAsString()), response);
+        this(request, Jsoup.parseBodyFragment(response.parseAsString()), response);
     }
 
     /**

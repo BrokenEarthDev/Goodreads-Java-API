@@ -10,6 +10,7 @@ public interface ResponseSection {
     Document getContainingDocument();
     Document getDocument();
     ResponsePath getPath();
+    GoodreadsResponse getResponse();
     @Nullable Entity convertToEntity();
 
 
