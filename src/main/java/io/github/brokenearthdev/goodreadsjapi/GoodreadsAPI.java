@@ -15,17 +15,18 @@ limitations under the License.
 */
 package io.github.brokenearthdev.goodreadsjapi;
 
+import io.github.brokenearthdev.goodreadsjapi.adapters.BookEntityAdapter;
+import io.github.brokenearthdev.goodreadsjapi.adapters.EntityAdapter;
 import io.github.brokenearthdev.goodreadsjapi.authentication.GoodreadsAuthentication;
 import io.github.brokenearthdev.goodreadsjapi.authentication.GoodreadsOauth;
 import io.github.brokenearthdev.goodreadsjapi.entities.book.Book;
 import io.github.brokenearthdev.goodreadsjapi.entities.user.Author;
-import io.github.brokenearthdev.goodreadsjapi.response.GoodreadsResponse;
-import io.github.brokenearthdev.goodreadsjapi.request.Parameter;
 import io.github.brokenearthdev.goodreadsjapi.request.RequestFactory;
-import io.github.brokenearthdev.goodreadsjapi.request.RequestParameters;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class GoodreadsAPI {
@@ -35,9 +36,15 @@ public class GoodreadsAPI {
     public static final String AUTHENTICATE_URL = BASE_GOODREADS_URL + "/oauth/authorize";
     public static final String ACCESS_TOKEN_URL = BASE_GOODREADS_URL + "/oauth/access_token";
 
+    public static final Map<Class<?>, EntityAdapter<?>> CLASS_TYPE_ADAPTER_MAP = new LinkedHashMap<>();
+
     private String key;
     private String secret;
     private GoodreadsOauth oauth;
+
+    private void init() {
+        CLASS_TYPE_ADAPTER_MAP.put(Book.class, new BookEntityAdapter());
+    }
 
     public GoodreadsAPI(@NotNull String key, String secret) {
         Objects.requireNonNull(key, "Key can't be null");
@@ -48,6 +55,7 @@ public class GoodreadsAPI {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        init();;
     }
 
     public GoodreadsAPI(String key) {
@@ -68,16 +76,4 @@ public class GoodreadsAPI {
 
         return null;
     }
-
-    public Book getBook(long isbn) throws IOException {
-        String link = "https://www.goodreads.com/book/isbn/" + isbn;
-        GoodreadsResponse response = newRequestFactory()
-                .setOAuth(oauth)
-                .setURL(link)
-                .setRequestParameters(new RequestParameters().addIfNotExists(new Parameter("key", key)))
-                .build().sendRequest();
-        System.out.println(link + "?" + response.getRequest().getParameters());
-        return new GoodreadsBook(response.getDocument());
-    }
-
 }

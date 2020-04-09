@@ -37,7 +37,7 @@ class Request implements GoodreadsRequest {
 
     public Request(String baseURL, RequestParameters parameters, GoodreadsOauth oauth, Verb verb, HttpContent content) {
         this.baseURL = baseURL;
-        this.parameters = parameters;
+        this.parameters = parameters == null ? new RequestParameters() : parameters;
         this.oauth = oauth;
         this.content = content;
         this.verb = verb;

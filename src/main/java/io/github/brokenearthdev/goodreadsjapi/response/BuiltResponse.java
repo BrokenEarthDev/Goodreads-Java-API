@@ -70,7 +70,7 @@ public class BuiltResponse implements GoodreadsResponse {
      * @throws IOException If any parsing error occurred
      */
     public BuiltResponse(GoodreadsRequest request, HttpResponse response) throws IOException {
-        this(request, Jsoup.parseBodyFragment(response.parseAsString()), response);
+        this(request, Jsoup.parse(response.parseAsString(), "", Parser.xmlParser()), response);
     }
 
     /**
