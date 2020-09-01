@@ -21,6 +21,4 @@ public interface Author extends Entity {
     String getBornAt();
     String getDiedAt();
     String getGender();
-
-    List<Book> getBooks();
 }

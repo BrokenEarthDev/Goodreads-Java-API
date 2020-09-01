@@ -39,28 +39,6 @@ public class AuthorImpl extends ResponseSectionImpl implements Author {
         this.section = section;
     }
 
-    private void bookSearch() {
-        ResponsePath path = new ResponsePath(section.getPath()).append("books");
-        ResponseSection booksResponseSection = path.findSection();
-        List<ResponseSection> responseList = new LinkedList<>();
-        Elements elements = booksResponseSection.getContainedDocument().children().get(0).children();
-        //System.out.println("XXX" + elements.size() + "V");
-        for (int i = 0; i < elements.size(); i++) {
-            responseList.add(booksResponseSection.subsection(new ResponsePath(booksResponseSection.getResponse(),
-                    NestedIndexSelector.NESTED_INDEX_SELECTOR).append("book", i)));
-        }
-
-        List<Book> books = new LinkedList<>();
-        try {
-            for (ResponseSection responseSection : responseList) {
-                books.add(ADAPTER.convert(responseSection));
-            }
-        } catch (Exception e) {
-            this.books = new LinkedList<>();
-        }
-        this.books = books;
-    }
-
     @Override
     public int getID() {
         return id;
@@ -112,12 +90,6 @@ public class AuthorImpl extends ResponseSectionImpl implements Author {
         return gender;
     }
 
-    @Override
-    public List<Book> getBooks() {
-        if (books == null)
-            bookSearch();
-        return books;
-    }
 
 
 }
