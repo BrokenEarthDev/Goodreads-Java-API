@@ -14,8 +14,6 @@ public class NestedIndexSelector extends NestedSelector {
         if (!(container instanceof TagIndexContainer)) return null;
         TagIndexContainer tagIndexContainer = (TagIndexContainer) container;
         if (container.size() == 1) {
-            System.out.println(tagIndexContainer.getTagNames());
-            System.out.println(tagIndexContainer.getIndexes());
             return getElementOfType(children, tagIndexContainer.getTagNames().get(0),
                     tagIndexContainer.getIndexes().get(0));
         }

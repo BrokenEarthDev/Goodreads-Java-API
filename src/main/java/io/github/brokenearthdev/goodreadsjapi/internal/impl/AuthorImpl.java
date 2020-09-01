@@ -40,10 +40,8 @@ public class AuthorImpl extends ResponseSectionImpl implements Author {
     }
 
     private void bookSearch() {
-        System.out.println(section.getContainedDocument());
         ResponsePath path = new ResponsePath(section.getPath()).append("books");
         ResponseSection booksResponseSection = path.findSection();
-        System.out.println(booksResponseSection);
         List<ResponseSection> responseList = new LinkedList<>();
         Elements elements = booksResponseSection.getContainedDocument().children().get(0).children();
         //System.out.println("XXX" + elements.size() + "V");

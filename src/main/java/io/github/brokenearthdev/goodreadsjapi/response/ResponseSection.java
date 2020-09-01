@@ -12,5 +12,5 @@ public interface ResponseSection {
 
     ResponseSection subsection(ResponsePath path);
     Element getElement(String name, int index);
-    
+
 }
