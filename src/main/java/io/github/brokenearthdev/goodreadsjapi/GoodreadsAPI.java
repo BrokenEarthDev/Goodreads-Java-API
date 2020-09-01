@@ -31,9 +31,7 @@ public class GoodreadsAPI {
     public static final String TOKEN_SERVER_URL = BASE_GOODREADS_URL + "/oauth/request_token";
     public static final String AUTHENTICATE_URL = BASE_GOODREADS_URL + "/oauth/authorize";
     public static final String ACCESS_TOKEN_URL = BASE_GOODREADS_URL + "/oauth/access_token";
-
-    private static final Map<Class<? extends Entity>, EntityAdapter<?>> ENTITY_ADAPTER_MAP = new LinkedHashMap<>();
-
+    
     private final String key;
     private String secret;
     private GoodreadsOauth oauth;
