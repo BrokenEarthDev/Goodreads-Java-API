@@ -49,20 +49,5 @@ public class ResponseSectionImpl implements ResponseSection {
        return NestedDefaultSelector.DEFAULT.getElementOfType(getContainedDocument().getAllElements(), name, index);
     }
 
-    @Override
-    public <T> T convertToEntity(Class<T> clazz) {
-        return null;
-    }
-
-    //todo fix (make more user-friendly)
-//    @Override
-//    public <T> T convertToEntity(Class<T> clazz) {
-//        try {
-//            return (T) GoodreadsAPI.CLASS_TYPE_ADAPTER_MAP.get(clazz).deserialize(this);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
 }

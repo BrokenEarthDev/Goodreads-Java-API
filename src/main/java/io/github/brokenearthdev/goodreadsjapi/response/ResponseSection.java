@@ -12,7 +12,5 @@ public interface ResponseSection {
 
     ResponseSection subsection(ResponsePath path);
     Element getElement(String name, int index);
-
-    <T> T convertToEntity(Class<T> clazz);
-
+    
 }
