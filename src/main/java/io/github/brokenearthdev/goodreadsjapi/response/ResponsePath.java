@@ -1,6 +1,8 @@
 package io.github.brokenearthdev.goodreadsjapi.response;
 
-import io.github.brokenearthdev.goodreadsjapi.internal.MultitagContainer;
+import io.github.brokenearthdev.goodreadsjapi.entities.Entity;
+import io.github.brokenearthdev.goodreadsjapi.internal.Container;
+import io.github.brokenearthdev.goodreadsjapi.internal.TagIndexContainer;
 import io.github.brokenearthdev.goodreadsjapi.internal.Utilities;
 import io.github.brokenearthdev.goodreadsjapi.internal.impl.ResponseSectionImpl;
 import io.github.brokenearthdev.goodreadsjapi.selector.NestedDefaultSelector;
@@ -11,83 +13,88 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
+import org.jsoup.select.Elements;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class ResponsePath {
 
-    private GoodreadsResponse response;
+    private TagIndexContainer container;
     private Selector<?> selector;
 
-    private MultitagContainer container = new MultitagContainer();
+    private GoodreadsResponse response;
 
     public ResponsePath(GoodreadsResponse response, Selector<?> selector) {
-        verifySelectorType(selector);
-        this.response = response;
+        check(selector);
+        this.container = new TagIndexContainer();
         this.selector = selector;
+        this.response = response;
     }
 
     public ResponsePath(GoodreadsResponse response) {
-        this(response, NestedDefaultSelector.DEFAULT);
-    }
-
-    public ResponsePath(ResponsePath path, Selector<?> selector) {
-        verifySelectorType(selector);
-        this.response = path.response;
-        this.container = path.container;
-        this.selector = selector;
+        this(response, NestedDefaultSelector.NESTED_INDEX_SELECTOR);
     }
 
     public ResponsePath(ResponsePath path) {
         this(path, path.selector);
     }
 
-    public ResponsePath appendSubdirectory(String tagName, int index) {
-        container.append(tagName, index);
+    public ResponsePath(ResponsePath path, Selector<?> selector) {
+        this.selector = selector;
+        this.container = path.container;
+        this.response = path.response;
+    }
+
+    private void check(Selector<?> selector) {
+        if (!(selector instanceof EntitySelector) && !(selector instanceof NestedSelector))
+            throw new RuntimeException(selector.getClass() + " isn't instance of " + EntitySelector.class + " or " +
+                    NestedSelector.class);
+    }
+
+    public ResponsePath append(String tag, int index) {
+        container.addElement(tag, index);
         return this;
     }
 
-    private void verifySelectorType(Selector<?> selector) {
-        if (!(selector instanceof NestedSelector) && !(selector instanceof EntitySelector)) {
-            throw new RuntimeException("selector should be an instance of " + NestedSelector.class + " or " +
-                    EntitySelector.class);
-        }
-    }
-
-    public ResponsePath appendSubdirectory(String tagName) {
-        return appendSubdirectory(tagName, -1);
+    public ResponsePath append(String tag) {
+        return append(tag, 0);
     }
 
     public ResponseSection findSection() {
-        try {
-            if (selector instanceof NestedSelector) {
-                NestedSelector selector = (NestedSelector) this.selector;
-                Element found = selector.select(container,
-                        Utilities.removeNonEssentialXML(response.getDocument().children()));
-                Document document = Jsoup.parse(found.outerHtml(), "", Parser.xmlParser());
-                return new ResponseSectionImpl(this, document);
-            }  else return  ((EntitySelector<?>) selector).select(container,
-                Utilities.removeNonEssentialXML(response.getDocument().children()));
-        } catch (Exception e) {
-            return null;
+        if (selector instanceof NestedSelector) {
+            NestedSelector selector = (NestedSelector) this.selector;
+            Element selected = selector.select(container,
+                    Utilities.removeNonEssentialXML(response.getDocument().children()));
+            Document document = Jsoup.parse(selected.outerHtml(), "", Parser.xmlParser());
+            return new ResponseSectionImpl(this, document);
+        } else {
+            EntitySelector<? extends Entity> selector = (EntitySelector<? extends Entity>) this.selector;
+            Elements children = Utilities.removeNonEssentialXML(response.getDocument().children());
+            return selector.select(container, children);
         }
-    }
-
-    public boolean exists() {
-        return findSection() != null;
-    }
-
-    public String toDirectory() {
-        StringBuilder builder = new StringBuilder();
-        container.keySet().forEach(k -> builder.append(k).append("/"));
-        String dir = builder.toString();
-        return dir.substring(0, dir.length() - 1);
-    }
-
-    public MultitagContainer toMultitagContainer() {
-        return container;
     }
 
     public GoodreadsResponse getResponse() {
         return response;
+    }
+
+    public TagIndexContainer getContainer() {
+        return container;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        List<TagIndexContainer.Entry> entries = container.getElements();
+        entries.forEach(e -> builder.append(e.getTagName()).append(" ").append("(").append(e.getIndex()).append(")")
+        .append(" > "));
+        String str = builder.toString();
+        return str.substring(0, str.length() - 2);
+    }
+
+    public Selector<?> getSelector() {
+        return selector;
     }
 
 }

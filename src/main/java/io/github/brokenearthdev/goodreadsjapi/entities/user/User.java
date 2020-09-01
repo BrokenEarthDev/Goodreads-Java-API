@@ -1,4 +1,7 @@
 package io.github.brokenearthdev.goodreadsjapi.entities.user;
 
-public interface User {
+import io.github.brokenearthdev.goodreadsjapi.entities.Entity;
+
+public interface User extends Entity {
+
 }

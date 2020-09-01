@@ -1,6 +1,5 @@
 package io.github.brokenearthdev.goodreadsjapi.internal.impl;
 
-import io.github.brokenearthdev.goodreadsjapi.GoodreadsAPI;
 import io.github.brokenearthdev.goodreadsjapi.response.GoodreadsResponse;
 import io.github.brokenearthdev.goodreadsjapi.response.ResponsePath;
 import io.github.brokenearthdev.goodreadsjapi.response.ResponseSection;
@@ -17,7 +16,6 @@ public class ResponseSectionImpl implements ResponseSection {
         this.path = path;
         this.contained = contained;
     }
-
 
     @Override
     public Document getContainingDocument() {
@@ -41,8 +39,8 @@ public class ResponseSectionImpl implements ResponseSection {
 
     @Override
     public ResponseSection subsection(ResponsePath path) {
-        ResponsePath path1 = new ResponsePath(path);
-        path1.toMultitagContainer().combine(path.toMultitagContainer());
+        ResponsePath path1 = new ResponsePath(getResponse(), path.getSelector());
+        path1.getContainer().combine(path.getContainer());
         return path1.findSection();
     }
 
@@ -51,15 +49,20 @@ public class ResponseSectionImpl implements ResponseSection {
        return NestedDefaultSelector.DEFAULT.getElementOfType(getContainedDocument().getAllElements(), name, index);
     }
 
-    //todo fix (make more user-friendly)
     @Override
     public <T> T convertToEntity(Class<T> clazz) {
-        try {
-            return (T) GoodreadsAPI.CLASS_TYPE_ADAPTER_MAP.get(clazz).deserialize(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return null;
     }
+
+    //todo fix (make more user-friendly)
+//    @Override
+//    public <T> T convertToEntity(Class<T> clazz) {
+//        try {
+//            return (T) GoodreadsAPI.CLASS_TYPE_ADAPTER_MAP.get(clazz).deserialize(this);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
 }

@@ -1,6 +1,6 @@
 package io.github.brokenearthdev.goodreadsjapi.selector;
 
-import io.github.brokenearthdev.goodreadsjapi.internal.MultitagContainer;
+import io.github.brokenearthdev.goodreadsjapi.internal.Container;
 import org.jsoup.select.Elements;
 
 /**
@@ -12,13 +12,13 @@ import org.jsoup.select.Elements;
 public interface Selector<T> {
 
     /**
-     * Selects the {@link T}s in the path contained in the {@link MultitagContainer}. Depending
+     * Selects the {@link T}s in the path contained in the {@link io.github.brokenearthdev.goodreadsjapi.internal.Container}. Depending
      * on the type of {@link Selector}s, there are different ways {@link T}s can be retrieved.
      *
      * @param container The container
      * @param children The elements that will be scanned.
      * @return The elements that are nested within the children passed in
      */
-    T select(MultitagContainer container, Elements children);
+    T select(Container<?> container, Elements children);
 
 }

@@ -5,7 +5,10 @@ import io.github.brokenearthdev.goodreadsjapi.response.ResponseSection;
 
 public abstract class EntityAdapter<T extends Entity> {
 
-    public abstract ResponseSection serialize(T entity);
-    public abstract T deserialize(ResponseSection section) throws Exception;
+    public ResponseSection toResponseSection(T t) {
+        return (ResponseSection) t;
+    }
+
+    public abstract T convert(ResponseSection section) throws Exception;
 
 }

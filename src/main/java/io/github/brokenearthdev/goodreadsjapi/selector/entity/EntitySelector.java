@@ -1,11 +1,8 @@
 package io.github.brokenearthdev.goodreadsjapi.selector.entity;
 
 import io.github.brokenearthdev.goodreadsjapi.entities.Entity;
-import io.github.brokenearthdev.goodreadsjapi.internal.MultitagContainer;
-import io.github.brokenearthdev.goodreadsjapi.response.BuiltResponse;
-import io.github.brokenearthdev.goodreadsjapi.response.GoodreadsResponse;
-import io.github.brokenearthdev.goodreadsjapi.response.ResponsePath;
-import io.github.brokenearthdev.goodreadsjapi.response.ResponseSection;
+import io.github.brokenearthdev.goodreadsjapi.internal.Container;
+import io.github.brokenearthdev.goodreadsjapi.response.*;
 import io.github.brokenearthdev.goodreadsjapi.selector.Selector;
 import org.jsoup.Jsoup;
 import org.jsoup.parser.Parser;
@@ -17,7 +14,7 @@ import org.jsoup.select.Elements;
  *
  * @param <T> An entity type
  */
-public abstract class EntitySelector<T extends Entity> implements Selector<T> {
+public abstract class EntitySelector<T extends Entity> implements Selector<ResponseSection> {
 
     /**
      * Creates a new instance of the object. The details of the {@link Entity} object
@@ -28,7 +25,7 @@ public abstract class EntitySelector<T extends Entity> implements Selector<T> {
      */
     public abstract T newInstance(ResponseSection section);
 
-    protected ResponsePath createPseudoPath(MultitagContainer container, Elements children, Selector<?> selector) {
+    protected ResponsePath createPseudoPath(Container<?> container, Elements children, Selector<?> selector) {
         GoodreadsResponse response = new BuiltResponse(null, Jsoup.parse(children.outerHtml(), "",
                 Parser.xmlParser()), null);
         return new ResponsePath(response, selector);

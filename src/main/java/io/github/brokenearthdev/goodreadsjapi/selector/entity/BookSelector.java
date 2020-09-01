@@ -2,7 +2,8 @@ package io.github.brokenearthdev.goodreadsjapi.selector.entity;
 
 import io.github.brokenearthdev.goodreadsjapi.adapters.BookEntityAdapter;
 import io.github.brokenearthdev.goodreadsjapi.entities.book.Book;
-import io.github.brokenearthdev.goodreadsjapi.internal.MultitagContainer;
+import io.github.brokenearthdev.goodreadsjapi.internal.Container;
+import io.github.brokenearthdev.goodreadsjapi.internal.TagIndexContainer;
 import io.github.brokenearthdev.goodreadsjapi.response.ResponsePath;
 import io.github.brokenearthdev.goodreadsjapi.response.ResponseSection;
 import io.github.brokenearthdev.goodreadsjapi.selector.NestedDefaultSelector;
@@ -22,14 +23,15 @@ public class BookSelector extends EntitySelector<Book> {
     @Override
     public Book newInstance(ResponseSection section) {
         try {
-            return TYPE_ADAPTER.deserialize(section);
+            return TYPE_ADAPTER.convert(section);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
 
     /**
-     * Selects the {@link Book} in the path contained in the {@link MultitagContainer}. Depending
+     * Selects the {@link Book} in the path contained in the {@link Container}. Depending
      * on the type of {@link io.github.brokenearthdev.goodreadsjapi.selector.Selector}s, there are
      * different ways {@link Book}s can be retrieved.
      *
@@ -38,7 +40,8 @@ public class BookSelector extends EntitySelector<Book> {
      * @return The elements that are nested within the children passed in
      */
     @Override
-    public Book select(MultitagContainer container, Elements children) {
+    public Book select(Container<?> container, Elements children) {
+        if (!(container instanceof TagIndexContainer)) return null;
         NestedDefaultSelector selector = NestedDefaultSelector.DEFAULT;
 
         // pseudo response path

@@ -102,4 +102,6 @@ public class BookImpl extends ResponseSectionImpl implements Book {
     public GoodreadsResponse getResponse() {
         return response;
     }
+
+
 }
